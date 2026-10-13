@@ -1,0 +1,20 @@
+{
+  "name": "campus-portal-vuln-demo",
+  "version": "1.0.0",
+  "description": "Portal Kampus Fiktif (Latihan Keamanan Aplikasi Web) - data & akun sintetis",
+  "main": "server.js",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node --no-warnings server.js",
+    "seed": "node --no-warnings db/seed.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "multer": "^2.0.1"
+  }
+}

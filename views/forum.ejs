@@ -1,0 +1,47 @@
+<% const title = 'Forum Diskusi' %>
+<%- include('partials/header', { title }) %>
+
+<h4>💬 Forum Diskusi</h4>
+<p class="text-muted small">Forum bersama mahasiswa &amp; dosen.</p>
+
+<div class="card p-3 mb-4">
+  <h6 class="mb-3">Buat Diskusi Baru</h6>
+  <form method="POST" action="/forum">
+    <div class="mb-2">
+      <input type="text" name="judul" class="form-control" placeholder="Judul diskusi" required />
+    </div>
+    <div class="mb-2">
+      <textarea name="isi" class="form-control" rows="3" placeholder="Tulis pertanyaan / diskusi Anda..." required></textarea>
+    </div>
+    <button class="btn btn-primary btn-sm">Kirim</button>
+  </form>
+</div>
+
+<% posts.forEach(p => { %>
+  <div class="card p-3 mb-3 forum-post">
+    <div class="d-flex justify-content-between">
+      <h6 class="mb-1"><%= p.judul %></h6>
+      <span class="badge bg-secondary badge-role align-self-start"><%= p.role %></span>
+    </div>
+    <p class="small text-muted mb-2"><%= p.nama_lengkap %> &middot; <%= p.created_at %></p>
+
+    <%#
+      VULNERABLE (disengaja): Stored XSS.
+      "p.isi" dirender TANPA escaping (unescaped output tag), sehingga
+      HTML/JavaScript yang dikirim lewat form "Buat Diskusi Baru" akan
+      dieksekusi langsung di browser pengguna lain yang membuka halaman ini.
+
+      Contoh payload untuk didemokan pada kolom "isi":
+        1) script alert dengan document.cookie
+        2) tag img dengan atribut onerror berisi alert
+
+      PERBAIKAN YANG BENAR: gunakan tag output yang otomatis melakukan
+      HTML-escaping (bukan unescaped output), atau sanitasi input dengan
+      library seperti sanitize-html / DOMPurify sebelum ditampilkan maupun
+      sebelum disimpan ke database.
+    %>
+    <div class="isi"><%- p.isi %></div>
+  </div>
+<% }) %>
+
+<%- include('partials/footer') %>

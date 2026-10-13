@@ -1,0 +1,34 @@
+<% const title = 'Nilai Saya' %>
+<%- include('../partials/header', { title }) %>
+
+<h4>📊 Nilai Saya</h4>
+
+<div class="card p-3 mt-3">
+  <table class="table table-sm mb-0">
+    <thead>
+      <tr>
+        <th>Kode</th>
+        <th>Mata Kuliah</th>
+        <th>SKS</th>
+        <th>Nilai Huruf</th>
+        <th>Nilai Angka</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (rows.length === 0) { %>
+        <tr><td colspan="5" class="text-muted text-center">Belum ada nilai yang diinput.</td></tr>
+      <% } %>
+      <% rows.forEach(r => { %>
+        <tr>
+          <td><%= r.kode %></td>
+          <td><%= r.mk_nama %></td>
+          <td><%= r.sks %></td>
+          <td><strong><%= r.nilai_huruf || '-' %></strong></td>
+          <td><%= r.nilai_angka ?? '-' %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('../partials/footer') %>

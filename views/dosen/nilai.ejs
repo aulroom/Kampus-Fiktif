@@ -1,0 +1,49 @@
+<% const title = 'Input Nilai' %>
+<%- include('../partials/header', { title }) %>
+
+<h4>📥 Input / Ubah Nilai</h4>
+
+<% if (query && query.ok) { %>
+  <div class="alert alert-success py-2">Nilai berhasil disimpan.</div>
+<% } %>
+
+<% if (mataKuliah.length === 0) { %>
+  <p class="text-muted">Anda belum mengampu mata kuliah apapun.</p>
+<% } %>
+
+<% mataKuliah.forEach(mk => { %>
+  <div class="card p-3 mb-4">
+    <h6><%= mk.kode %> - <%= mk.nama %></h6>
+
+    <div class="row g-2 small text-muted fw-bold border-bottom pb-2 mb-2 d-none d-md-flex">
+      <div class="col-md-2">NIM</div>
+      <div class="col-md-4">Nama</div>
+      <div class="col-md-2">Nilai Huruf</div>
+      <div class="col-md-2">Nilai Angka</div>
+      <div class="col-md-2"></div>
+    </div>
+
+    <% mahasiswa.forEach(m => { %>
+      <% const existing = nilaiMap[`${m.id}_${mk.id}`] %>
+      <form method="POST" action="/dosen/nilai/update" class="row g-2 align-items-center mb-2">
+        <input type="hidden" name="mahasiswa_id" value="<%= m.id %>" />
+        <input type="hidden" name="mata_kuliah_id" value="<%= mk.id %>" />
+        <div class="col-md-2 small"><%= m.nim %></div>
+        <div class="col-md-4"><%= m.nama_lengkap %></div>
+        <div class="col-md-2">
+          <input type="text" name="nilai_huruf" class="form-control form-control-sm"
+            value="<%= existing ? existing.nilai_huruf : '' %>" placeholder="mis. A" />
+        </div>
+        <div class="col-md-2">
+          <input type="number" step="0.01" name="nilai_angka" class="form-control form-control-sm"
+            value="<%= existing ? existing.nilai_angka : '' %>" placeholder="mis. 85" />
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-sm btn-primary w-100">Simpan</button>
+        </div>
+      </form>
+    <% }) %>
+  </div>
+<% }) %>
+
+<%- include('../partials/footer') %>

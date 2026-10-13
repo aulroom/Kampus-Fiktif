@@ -1,0 +1,35 @@
+<% const title = 'Login - Portal Kampus Fiktif' %>
+<%- include('partials/header', { title, user: null }) %>
+
+<div class="login-wrapper">
+  <div class="card p-4">
+    <h4 class="mb-1 text-center">🎓 Portal Kampus Fiktif</h4>
+    <p class="text-center text-muted small mb-4">Login untuk masuk ke sistem (data &amp; akun sintetis)</p>
+
+    <% if (error) { %>
+      <div class="alert alert-danger py-2"><%= error %></div>
+    <% } %>
+
+    <form method="POST" action="/login">
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+        <input type="text" name="username" class="form-control" value="<%= oldUsername %>" autofocus required />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" name="password" class="form-control" required />
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Masuk</button>
+    </form>
+
+    <hr />
+    <p class="small text-muted mb-1">Akun demo (sintetis):</p>
+    <ul class="small text-muted mb-0">
+      <li>admin / Admin#2026</li>
+      <li>dosen.sari / Dosen#2026</li>
+      <li>mhs.andi / Mhs#2026</li>
+    </ul>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

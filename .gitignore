@@ -1,0 +1,5 @@
+node_modules/
+db/campus.db
+uploads/tugas/*
+!uploads/tugas/.gitkeep
+.DS_Store
